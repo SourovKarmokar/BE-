@@ -1,5 +1,8 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const cors = require("cors");
+const app = express();
+app.use(cors());
+app.use(express.json());
 const port = 3000
 const studentInfo = [
     {
@@ -17,8 +20,17 @@ const studentInfo = [
 ]
 
 app.get('/studentinfo', (req, res) => {
-  res.send(studentInfo)
+  res.send(studentInfo);
+
 })
+
+app.post("/createstudentinfo", (req,res)=>{
+    console.log(req.body); 
+    const newStudent = req.body;
+    console.log(newStudent);
+    studentInfo.push(newStudent)  
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
