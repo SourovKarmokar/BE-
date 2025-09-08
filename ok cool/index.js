@@ -2,6 +2,8 @@ const express = require("express");
 const connectDb = require("./bd/connectDb");
 const userSchema = require("./model/userSchema");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
+const emailVerification = require("./helpers/emailVerification");
 
 const app = express();
 app.use(express.json());
@@ -25,13 +27,15 @@ app.post("/createUser", (req, res) => {
     password: hash,
   });
   user.save();
-    
-  });
-  
+  emailVerification(email);
   res.status(201).json({
     message: "User Create Successfull",
     data: user,
   });
+    
+  });
+  
+  
 });
 
 app.listen(port, (req, res) => {
