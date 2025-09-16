@@ -1,3 +1,4 @@
+const emailValidation = require("../helpers/emailValidation");
 const userSchema = require("../model/userSchema");
 const bcrypt = require("bcrypt");
 function registrationController(req, res) {
@@ -13,16 +14,21 @@ function registrationController(req, res) {
   if (!email) {
     return res.json("Email is Required");
   }
+  if(!emailValidation(email)){
+    return res.json("thik moto email da")
+  }
   if (!password) {
     return res.json("Password is Required");
   }
 
   bcrypt.hash(password, 10 , function (err, hash) {
+
     const user = new userSchema({
     firstName: firstName,
     lastName: lastName,
     email: email,
     password: hash,
+     
   });
   user.save();
 
