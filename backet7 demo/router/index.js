@@ -2,6 +2,6 @@ const express = require("express")
 const router = express.Router()
 const mainRouter = require("./api") 
 
-router.use("/api/v1",mainRouter)
+router.use(process.env.BASE_URL,mainRouter)
 
 module.exports = router

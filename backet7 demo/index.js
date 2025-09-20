@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const router = require('./router')
 const dbConnection = require('./config/dbConnection')
@@ -7,6 +8,8 @@ const port = 3000
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+app.use(express.json())
 dbConnection()
 app.use(router)
 
