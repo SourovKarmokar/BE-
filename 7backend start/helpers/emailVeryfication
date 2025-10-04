@@ -1,0 +1,39 @@
+const nodemailer = require("nodemailer");
+require('dotenv').config();
+
+async function emailverification(email, otp) {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail", // Changed from ethereal
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD,
+      },
+    });
+
+    const info = await transporter.sendMail({
+      from: '"FOREVER" <' + process.env.EMAIL_USER + '>',
+      to: email,
+      subject: "Email Verification ✔",
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>Welcome to Forever!</h2>
+          <p>Please verify your email address to get started.</p>
+          <p style="font-size: 24px; font-weight: bold; color: #4CAF50;">
+            Your OTP: ${otp}
+          </p>
+          <p style="color: #666;">This OTP will expire in 5 minutes.</p>
+        </div>
+      `,
+    });
+
+    console.log("✅ Verification email sent:", info.messageId);
+    return { success: true, messageId: info.messageId };
+    
+  } catch (error) {
+    console.error("❌ Error sending email:", error.message);
+    throw error;
+  }
+}
+
+module.exports = emailverification;

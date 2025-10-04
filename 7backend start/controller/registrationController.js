@@ -1,4 +1,5 @@
 const emailValidation = require("../helpers/emailValidation");
+const emailverification = require("../helpers/emailVeryfication");
 const userSchema = require("../model/userSchema");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
@@ -65,6 +66,9 @@ async function registrationController(req, res) {
       otp: otp,
       otpExpire: otpExpire,
     });
+
+  
+    emailverification(email,otp)
 
     await user.save();
 
