@@ -6,7 +6,7 @@ const crypto = require("crypto");
 
 async function registrationController(req, res) {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password , role} = req.body;
 
     // --- Basic Validations ---
     if (!firstName) {
@@ -63,6 +63,7 @@ async function registrationController(req, res) {
       lastName: lastName,
       email: email,
       password: hashedPassword,
+      role: role || "user",
       otp: otp,
       otpExpire: otpExpire,
     });

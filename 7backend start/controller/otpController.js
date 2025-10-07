@@ -1,6 +1,7 @@
 const { error } = require("console");
 const userSchema = require("../model/userSchema")
-const crypto = require("crypto")
+const crypto = require("crypto");
+const emailverification = require("../helpers/emailVeryfication");
 
 async function otpController(req,res){
 
@@ -63,6 +64,8 @@ async function resendOtpController(req,res){
 
     )
     }
+
+    await emailverification(email,otp)
 
     
     res.status(200).json({
