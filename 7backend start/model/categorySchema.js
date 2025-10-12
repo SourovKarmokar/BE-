@@ -9,7 +9,13 @@ const categorySchema = new Schema({
     },
     description:{
         type: String
-    }
+    },
+    subCategory:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: "SubCategoryList",
+        }
+    ],
 })
 
 module.exports = mongoose.model("CategoryList", categorySchema)
