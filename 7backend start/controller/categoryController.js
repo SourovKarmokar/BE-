@@ -26,7 +26,7 @@ async function getAllCategoriesController(req,res){
     console.log("cool");
 
     try{
-        const category =  await categorySchema.find()
+        const category =  await categorySchema.find().populate("subCategory")
         res.status(200).json({
             success: true,
             message: "All categories get successfully ",
