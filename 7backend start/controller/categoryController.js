@@ -64,4 +64,28 @@ async function getAllCategoriesController(req,res){
 }
 
 
-module.exports = {createCategoryController , getAllCategoriesController,getSingleCategoryController}
+async function updateCategoryController(req,res){
+  try{
+      const {id} = req.params
+    const {name,  description} = req.body
+    
+    console.log(name);
+    const category = await  categorySchema.findByIdAndUpdate(
+        id,{
+            $set:{name,description}
+        },
+        {
+            new: true
+        }
+    )
+  } catch (error){
+        res.status(500).json({
+            success: false,
+            message:"something went wrong",
+        })
+  }
+}
+
+module.exports = {createCategoryController , getAllCategoriesController,getSingleCategoryController,
+updateCategoryController,
+}
