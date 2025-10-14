@@ -77,7 +77,12 @@ async function updateCategoryController(req,res){
         {
             new: true
         }
-    )
+    );
+    res.status(200).json({
+        success: true,
+        message:"This category updated successfully done",
+        data: category,
+    })
   } catch (error){
         res.status(500).json({
             success: false,
@@ -86,6 +91,29 @@ async function updateCategoryController(req,res){
   }
 }
 
+
+async function deleteCategoryController(req,res){
+    try{
+        const {id} = req.params
+        const category = await categorySchema.findByIdAndDelete(id)
+        res.status(200).json({
+            success: true,
+            message: "this Category Deleted Successfully done",
+            data: category
+        })
+
+    } catch (error){
+       res.status(500).json({
+        success: false,
+        message: "Something went Wrong",
+       }) 
+    }
+    
+}
+
+
+
 module.exports = {createCategoryController , getAllCategoriesController,getSingleCategoryController,
 updateCategoryController,
+deleteCategoryController
 }
