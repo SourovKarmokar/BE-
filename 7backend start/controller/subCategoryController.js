@@ -53,4 +53,33 @@ async function getAllSubCategoriesController(req, res) {
   }
 }
 
-module.exports = {createSubCategoryController , getAllSubCategoriesController};
+async function getSingleSubCategoryController(req,res){
+    try{
+
+        const { id } = req.params;
+     const getSingleSubCategory = await SubCategorySchema.findById(id)
+     res.status(200).json({
+        success: true,
+        message: "Single Sub Category data find successfully",
+        data: getSingleSubCategory,
+     })
+
+    } catch(error){
+        res.status(500).json({
+            success: false,
+            message: "Somthing Went Wrong"
+        })
+    }
+}
+
+function updateSubCategoryController(req,res){
+ const {name, description , category } = req.body
+ console.log();
+ 
+
+}
+
+module.exports = {createSubCategoryController , getAllSubCategoriesController,
+getSingleSubCategoryController,
+updateSubCategoryController,
+};
