@@ -75,7 +75,10 @@ async function getSingleSubCategoryController(req,res){
 function updateSubCategoryController(req,res){
  const {name, description , category } = req.body
  console.log();
- 
+ console.log(name , description, category );
+ const {id} = req.params
+  console.log(id);
+  
 
 }
 
