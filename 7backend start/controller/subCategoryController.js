@@ -72,14 +72,32 @@ async function getSingleSubCategoryController(req,res){
     }
 }
 
-function updateSubCategoryController(req,res){
+async function updateSubCategoryController(req,res){
  const {name, description , category } = req.body
  console.log();
  console.log(name , description, category );
  const {id} = req.params
   console.log(id);
-  
+  // const subcategory = await SubCategorySchema.findById(id)
+  const updateSubCategory = await SubCategorySchema.findByIdAndUpdate(
+    id,
+    {
+      $set: {name, description, category}
+    },
+    {
+      new: true
+    }
+  )
+  await categorySchema.findByIdAndUpdate(
+    category,
+    {
+      $push:{subCategory : updateSubCategory._id}
+    }
+  )
 
+  res.status(200).json({
+    data : updateSubCategory
+  })
 }
 
 module.exports = {createSubCategoryController , getAllSubCategoriesController,
