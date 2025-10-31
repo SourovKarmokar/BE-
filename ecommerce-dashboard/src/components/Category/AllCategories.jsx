@@ -66,7 +66,9 @@ export default function AllCategories() {
             <TableCell>{category.name}</TableCell>
             <TableCell>{category.description}</TableCell>
             <TableCell>
+              <Link to="/update-category">
               <Button className="mr-3 ">Edit</Button>
+              </Link>
             <Button 
             onClick={()=>handleDelete(category._id)}
             className="bg-red-500" >Delete</Button>
