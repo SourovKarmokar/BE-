@@ -9,10 +9,12 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+
 import { Button } from "@/components/ui/button"
 import { useEffect } from "react"
 import axios from "axios"
 import { useState } from "react"
+import { Link } from "react-router"
 
 const invoices = [
   {
@@ -66,7 +68,7 @@ export default function AllCategories() {
             <TableCell>{category.name}</TableCell>
             <TableCell>{category.description}</TableCell>
             <TableCell>
-              <Link to="/update-category">
+              <Link to={`/update-category/${category._id}`}>
               <Button className="mr-3 ">Edit</Button>
               </Link>
             <Button 
