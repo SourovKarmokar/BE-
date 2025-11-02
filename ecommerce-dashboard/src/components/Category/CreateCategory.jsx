@@ -40,7 +40,7 @@ const CreateCategory = () => {
 
   return (
     <div className="px-10">
-      this is category Page
+      This is CreateCategory Page
       <form onSubmit={handleSubmit(onSubmit)} >
          <FieldGroup className='my-2' > 
               <Field>
