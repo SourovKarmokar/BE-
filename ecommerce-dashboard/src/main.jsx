@@ -8,6 +8,7 @@ import AllProduct from './components/Product/AllProduct.jsx';
 import CreateCategory from './components/Category/CreateCategory.jsx';
 import AllCategories from './components/Category/AllCategories.jsx';
 import UpdateCategory from './components/Category/UpdateCategory.jsx';
+import CreateSubCategory from './components/SubCategory/CreateSubCategory';
 
 
 const router = createBrowserRouter([
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
       { path: "/all-product", Component: AllProduct },
       { path: "/create-category", Component: CreateCategory },
       { path: "/all-categories", Component: AllCategories },
-      { path: "/update-category/:id", Component: UpdateCategory  },
+      { path: "/update-category", Component: UpdateCategory  },
+      { path: "/create-subcategory", Component: CreateSubCategory  },
       
     ],
   },

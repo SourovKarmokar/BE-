@@ -31,7 +31,7 @@ const CreateCategory = () => {
       try{
         axios.post("http://localhost:3000/api/v1/category/createcategory",data);
         toast.success("Category created successfully!");
-        reset(); // Reset form after successful submission
+        
       }catch (error){
         console.log(error);
         

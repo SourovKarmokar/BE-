@@ -50,6 +50,21 @@ const data = {
         
       ],
     },
+    {
+      title: "Sub Category",
+      url: "#",
+      items: [
+        {
+          title: "Create Sub Category",
+          url: "/create-subcategory",
+        },
+        // {
+        //   title: "All Categories",
+        //   url: "/all-categories",
+        // },
+        
+      ],
+    },
     
   ],
 }

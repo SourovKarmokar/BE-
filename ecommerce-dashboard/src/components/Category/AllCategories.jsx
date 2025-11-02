@@ -16,14 +16,7 @@ import axios from "axios"
 import { useState } from "react"
 import { Link } from "react-router"
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-]
+
 
 export default function AllCategories() {
   const [categories, setCategories] = useState([])
