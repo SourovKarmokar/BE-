@@ -18,13 +18,14 @@ import { Link } from "react-router"
 
 
 
-export default function AllCategories() {
-  const [categories, setCategories] = useState([])
+export default function AllSubCategories() {
 
-  const  fetchCategories =  async () =>{
+  const [subCategories, setSubCategories] = useState([])
+
+  const  fetchSubCategories =  async () =>{
     try{
-      const {data} = await axios.get("http://localhost:3000/api/v1/category/getallcategories");
-      setCategories(data.data);
+      const {data} = await axios.get("http://localhost:3000/api/v1/subcategory/getallsubcategories");
+      setSubCategories(data.data);
       
     }catch(error) {
       console.log(error);
@@ -33,17 +34,20 @@ export default function AllCategories() {
   }
 
   useEffect(()=>{
-    fetchCategories()
+    fetchSubCategories()
   },[])
   
-  const handleDelete = async (id) => {
-  try {
-    await axios.delete(`http://localhost:3000/api/v1/category/deletecategory/${id}`);
-    fetchCategories();
-  } catch (error) {
-    console.log(error);
+  const handleDelete = async (id) =>{
+    try{
+        console.log(id);
+    await axios.delete(`http://localhost:3000/api/v1/subcategory/deletesubcategory/${id}`);
+    }catch(error){
+        console.log(error);
+        
+    }
+    
+    fetchSubCategories();
   }
-}
   
   return (
     <div className="mx-10 shadow rounded py-2">
@@ -58,17 +62,17 @@ export default function AllCategories() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {categories.map((category,index) => (
-          <TableRow key={category._id}>
+        {subCategories.map((subcategory,index) => (
+          <TableRow key={subcategory._id}>
             <TableCell className="font-medium">{index+1}</TableCell>
-            <TableCell>{category.name}</TableCell>
-            <TableCell>{category.description}</TableCell>
+            <TableCell>{subcategory.name}</TableCell>
+            <TableCell>{subcategory.description}</TableCell>
             <TableCell>
-              <Link to={`/update-category/${category._id}`}>
+              <Link to={`/update-subcategory/${subcategory._id}`}>
               <Button className="mr-3 ">Edit</Button>
               </Link>
             <Button 
-            onClick={()=>handleDelete(category._id)}
+            onClick={()=>handleDelete(subcategory._id)}
             className="bg-red-500" >Delete</Button>
             </TableCell>
            

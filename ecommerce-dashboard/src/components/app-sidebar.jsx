@@ -58,10 +58,10 @@ const data = {
           title: "Create Sub Category",
           url: "/create-subcategory",
         },
-        // {
-        //   title: "All Categories",
-        //   url: "/all-categories",
-        // },
+        {
+          title: "All Sub Categories",
+          url: "/all-subcategories",
+        },
         
       ],
     },

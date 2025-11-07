@@ -9,6 +9,8 @@ import CreateCategory from './components/Category/CreateCategory.jsx';
 import AllCategories from './components/Category/AllCategories.jsx';
 import UpdateCategory from './components/Category/UpdateCategory.jsx';
 import CreateSubCategory from './components/SubCategory/CreateSubCategory';
+import AllSubCategories from './components/SubCategory/AllSubCategories';
+import UpdateSubCategory from './components/SubCategory/UpdateSubCategory.jsx';
 
 
 const router = createBrowserRouter([
@@ -23,6 +25,8 @@ const router = createBrowserRouter([
       { path: "/all-categories", Component: AllCategories },
       { path: "/update-category", Component: UpdateCategory  },
       { path: "/create-subcategory", Component: CreateSubCategory  },
+      { path: "/all-subcategories", Component: AllSubCategories  },
+      { path: "/update-subcategory/:id", Component: UpdateSubCategory  }
       
     ],
   },

@@ -17,11 +17,11 @@ const UpdateCategory = () => {
     const {id} = useParams();
     console.log(id);
     
-    const [category   , setCategory] = useState(null);
+    const [subCategory   , setSubCategory] = useState(null);
       const  fetchCategories =  async () =>{
     try{
-      const {data} = await axios.get(`http://localhost:3000/api/v1/category/getsinglecategory/${id}`);
-      setCategory(data.data);
+      const {data} = await axios.get(`http://localhost:3000/api/v1/subcategory/getsinglecategory/${id}`);
+      setSubCategory(data.data);
       
       
     }catch(error) {
@@ -89,6 +89,9 @@ const UpdateCategory = () => {
                  
                 </Field>
              </FieldGroup>
+
+
+             
              <div className="mt-5">
                <Button type="submit" onClick={handleUpdate }>Update Category</Button>
              </div>

@@ -53,11 +53,11 @@ async function getAllSubCategoriesController(req, res) {
   }
 }
 
-async function getSingleSubCategoryController(req,res){
+async function    getSingleSubCategoryController(req,res){
     try{
 
         const { id } = req.params;
-     const getSingleSubCategory = await SubCategorySchema.findById(id)
+     const getSingleSubCategory = await SubCategorySchema.findById(id).populate("category")
      res.status(200).json({
         success: true,
         message: "Single Sub Category data find successfully",
@@ -82,7 +82,8 @@ async function updateSubCategoryController(req,res){
   const updateSubCategory = await SubCategorySchema.findByIdAndUpdate(
     id,
     {
-      $set: {name, description, category}
+      $set: {name, description, category},
+      $unset : {category}
     },
     {
       new: true
@@ -100,7 +101,31 @@ async function updateSubCategoryController(req,res){
   })
 }
 
+async function deleteSubCategoryController (req, res) {
+  try{
+    const {id} = req.params;
+  const deleteData = await SubCategorySchema.findByIdAndDelete(id);
+
+  res.status(200).json({
+    success: true,
+    message:"Sub Category is deleted Successfully",
+    data: deleteData,
+  });
+  } catch (error) {
+    return res.status(501).json({
+      success: false,
+      message:"Sumthisn is wrong in Server",
+      error:error,
+    })
+  }
+
+
+
+}
+
+
 module.exports = {createSubCategoryController , getAllSubCategoriesController,
 getSingleSubCategoryController,
 updateSubCategoryController,
+deleteSubCategoryController
 };
