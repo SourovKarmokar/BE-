@@ -83,12 +83,20 @@ async function updateSubCategoryController(req,res){
     id,
     {
       $set: {name, description, category},
-      $unset : {category}
+     
     },
     {
       new: true
     }
   )
+    
+  if(category) {
+    await categorySchema.updateMany(
+      {subCategory: id},
+      {$pull :{subCategory: id}}
+    );
+  }
+
   await categorySchema.findByIdAndUpdate(
     category,
     {

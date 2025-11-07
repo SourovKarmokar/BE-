@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useEffect, useState } from "react";
@@ -64,7 +64,7 @@ const UpdateSubCategory = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    
+
     try {
       // Send the updated subcategory data
       const res = await axios.patch(
@@ -72,13 +72,12 @@ const UpdateSubCategory = () => {
         {
           name: subCategory.name,
           description: subCategory.description,
-          category: subCategory.category
+          category: subCategory.category,
         }
       );
-      
+
       console.log("Update response:", res);
       toast.success("Subcategory updated successfully!");
-      
     } catch (error) {
       console.error("Error updating subcategory:", error);
       toast.error("Failed to update subcategory");
@@ -87,6 +86,19 @@ const UpdateSubCategory = () => {
 
   return (
     <div className="px-10">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      
       <form onSubmit={handleUpdate}>
         <FieldGroup className="my-2">
           <Field>
@@ -104,7 +116,9 @@ const UpdateSubCategory = () => {
 
         <FieldGroup className="my-2">
           <Field>
-            <FieldLabel htmlFor="description">Subcategory Description</FieldLabel>
+            <FieldLabel htmlFor="description">
+              Subcategory Description
+            </FieldLabel>
             <Input
               onChange={(e) =>
                 setSubCategory({ ...subCategory, description: e.target.value })
@@ -125,7 +139,9 @@ const UpdateSubCategory = () => {
               defaultValue={subCategory?.category?._id || ""}
               render={({ field }) => (
                 <Select
-                  value={subCategory?.category?._id || subCategory?.category || ""}
+                  value={
+                    subCategory?.category?._id || subCategory?.category || ""
+                  }
                   onValueChange={(value) =>
                     setSubCategory({
                       ...subCategory,
@@ -158,9 +174,7 @@ const UpdateSubCategory = () => {
         </FieldGroup>
 
         <div className="mt-5">
-          <Button type="submit">
-            Update Subcategory
-          </Button>
+          <Button type="submit">Update Subcategory</Button>
         </div>
       </form>
     </div>

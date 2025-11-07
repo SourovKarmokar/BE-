@@ -45,27 +45,31 @@ const CreateSubCategory = () => {
     fetchCategories();
   }, []);
 
-  const onSubmit = async (data) => {
+ const onSubmit = async (data) => {
     const category = demo;
     const { name, description } = data;
     
-    try {
-      await axios.post(
-        "http://localhost:3000/api/v1/subcategory/createsubcategory",
-        {
-          name,
-          description,
-          category
-        }
-      );
-
-      toast.success("Sub Category created successfully!");
-      reset(); // Reset form after successful submission
-    } catch (error) {
-      console.error("Error creating sub category:", error);
-      toast.error("Failed to create sub category");
+   try {
+  await axios.post(
+    "http://localhost:3000/api/v1/subcategory/createsubcategory",
+    {
+      name,
+      description,
+      category
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/ form - data"
+      }
     }
-  };
+  );
+  
+  toast.success("Subcategory created successfully!");
+  
+} catch(error) {
+  console.log(error);
+  toast.error(error.response?.data?.message || "Failed to create subcategory");
+}
 
   return (
     <div className="px-10">
