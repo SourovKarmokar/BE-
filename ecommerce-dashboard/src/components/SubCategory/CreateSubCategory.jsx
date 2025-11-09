@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -165,5 +166,5 @@ const CreateSubCategory = () => {
     </div>
   );
 };
-
+}
 export default CreateSubCategory;
