@@ -23,9 +23,9 @@ const productSchema = new Schema({
     quantity:{
         type: Number
     },
-    sold:{
-        type: Number
-    },
+    // sold:{
+    //     type: Number
+    // },
     image:{
         type: String
     },

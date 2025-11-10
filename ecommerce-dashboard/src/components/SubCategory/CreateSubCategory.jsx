@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -27,8 +26,6 @@ const CreateSubCategory = () => {
   } = useForm();
 
   const [categories, setCategories] = useState([]);
-  const [demo, setDemo] = useState("");
-  console.log(demo);
 
   const fetchCategories = async () => {
     try {
@@ -46,31 +43,32 @@ const CreateSubCategory = () => {
     fetchCategories();
   }, []);
 
- const onSubmit = async (data) => {
-    const category = demo;
-    const { name, description } = data;
+  const onSubmit = async (data) => {
+    const { name, description, categoryId } = data;
     
-   try {
-  await axios.post(
-    "http://localhost:3000/api/v1/subcategory/createsubcategory",
-    {
-      name,
-      description,
-      category
-    },
-    {
-      headers: {
-        "Content-Type": "multipart/ form - data"
-      }
+    try {
+      await axios.post(
+        "http://localhost:3000/api/v1/subcategory/createsubcategory",
+        {
+          name,
+          description,
+          category: categoryId
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      
+      toast.success("Subcategory created successfully!");
+      reset();
+      
+    } catch(error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to create subcategory");
     }
-  );
-  
-  toast.success("Subcategory created successfully!");
-  
-} catch(error) {
-  console.log(error);
-  toast.error(error.response?.data?.message || "Failed to create subcategory");
-}
+  };
 
   return (
     <div className="px-10">
@@ -119,8 +117,12 @@ const CreateSubCategory = () => {
             <Controller
               name="categoryId"
               control={control}
+              rules={{ required: "Category is required" }}
               render={({ field }) => (
-                <Select onValueChange={(value) => setDemo(value)}>
+                <Select 
+                  onValueChange={field.onChange}
+                  value={field.value}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
@@ -166,5 +168,5 @@ const CreateSubCategory = () => {
     </div>
   );
 };
-}
+
 export default CreateSubCategory;
