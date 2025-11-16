@@ -7,7 +7,18 @@ async function createProductController(req, res) {
 
     
  try{
+        const page = (req.query.page) 
+        const size = (req.query.size) 
+
+        console.log(page, "page");
+        console.log(size, "size");
+        
+        
+
         const totalProduct = await productSchema.countDocuments({})
+        console.log(totalProduct, "totalProduct") ;
+        
+
        const {name, description, price, category , discount , stock , image} = req.body
 
     //    const imageName = req.file.filename
@@ -39,28 +50,31 @@ async function createProductController(req, res) {
 
 async function getAllProductController(req,res){
     try{
+        const page = parseInt(req.query.page) || 1;
+        console.log(page, "page");
 
-        const page = req.query.page 
-        console.log(page);
+        const size = parseInt(req.query.size) || 10;
+        console.log(size, "size");
 
-        const size = req.query.size 
-        console.log(size);
-        
-        
-
+        const skip = (page - 1) * size;
+        console.log(skip, "skip");
 
         const totalProduct = await productSchema.countDocuments({})
         console.log(totalProduct,"totalproduct");
 
-        const product = await productSchema.find()
+        const product = await productSchema.find().skip(skip).limit(size)
+        
         res.status(200).json({
             success:true,
             Message: "All products get Successfully ",
-            data: product
+            data: product,
+            total: totalProduct
         })
     }catch(error){
         res.status(500).json({
-            message: "faild to get Data"
+            success: false,
+            message: "Failed to get Data",
+            error: error.message
         })
     }
 }
