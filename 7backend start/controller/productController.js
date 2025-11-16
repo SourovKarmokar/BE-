@@ -7,6 +7,7 @@ async function createProductController(req, res) {
 
     
  try{
+        const totalProduct = await productSchema.countDocuments({})
        const {name, description, price, category , discount , stock , image} = req.body
 
     //    const imageName = req.file.filename
@@ -38,6 +39,19 @@ async function createProductController(req, res) {
 
 async function getAllProductController(req,res){
     try{
+
+        const page = req.query.page 
+        console.log(page);
+
+        const size = req.query.size 
+        console.log(size);
+        
+        
+
+
+        const totalProduct = await productSchema.countDocuments({})
+        console.log(totalProduct,"totalproduct");
+
         const product = await productSchema.find()
         res.status(200).json({
             success:true,

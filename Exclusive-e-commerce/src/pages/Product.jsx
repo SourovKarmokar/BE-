@@ -1,7 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 
+import { BiSolidStar } from "react-icons/bi";
+import { FaHeart, FaEye } from 'react-icons/fa';
+import { LuEye } from "react-icons/lu";
+import { FaRegHeart } from "react-icons/fa";
+import  axios  from "axios";
+
+
 const Product = () => {
+
+  const [product , setProduct] = useState([])
+
+
+  const fetchProduct = async() =>{
+    try{
+      const {data} = await axios.get("http://localhost:3000/api/v1/product/getallproduct")
+      setProduct(data.data);
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+  console.log(product);
+
+  const pageArr = [...Array(5).keys()]
+  .map((item)=> item + 1)
+  ;
+  
+
+useEffect(() => {
+ fetchProduct()
+},[])  
+
+
   const productCategory = [
     {name: "Woman’s Fashion"},
     {name: "Men’s Fashion"},
@@ -61,26 +94,27 @@ const Product = () => {
       </div>
       
       <div className="w-[70%]">
-        <div key={item.id}>
+        <div className='flex justify-between flex-wrap space-y-10'>
+
+          {
+            product.map((product)=>(
+                <div>
           <div className="overflow-hidden">
             <div className="relative group bg-[#F5F5F5] w-[270px] h-[250px] flex items-center justify-center rounded-[4px]">
               <img
                 className="group-hover:scale-125 duration-300"
-                src={item.image}
-                alt={item.title}
+                src={product.image}
               />
               <div className="absolute top-[12px] left-[12px] font-poppins font-normal text-[12px] leading-[18px] text-white py-[4px] px-[12px] bg-secondary rounded-[4px]">
                 -
-                {Math.round(
-                  ((item.mainprice - item.offerprice) / item.mainprice) * 100
-                )}
-                %
+                 3
+                 %
               </div>
               <div className="w-[34px] h-[34px] rounded-full bg-white absolute right-[12px] top-[12px] flex items-center justify-center hover:bg-secondary hover:text-white duration-300">
-                <Heart />
+                <FaRegHeart />
               </div>
               <div className="w-[34px] h-[34px] rounded-full bg-white absolute right-[12px] top-[54px] flex items-center justify-center hover:bg-secondary hover:text-white duration-300">
-                <Eye />
+                <LuEye />
               </div>
               <button
                 className="absolute bottom-0 w-full py-2 bg-secondary hover:bg-primary text-white 
@@ -94,45 +128,49 @@ const Product = () => {
           </div>
           <div className="mt-[16px]">
             <h1 className="font-poppins font-medium text-[16px] leading-[24px] text-black">
-              {item.title}
+              {product.name}
             </h1>
             <div className="mt-2 flex gap-x-3">
               <span className="font-poppins font-medium text-[16px] leading-[24px] text-secondary">
-                ${item.offerprice}
+                {product.price}
               </span>
               <span className="font-poppins font-medium text-[16px] leading-[24px] text-[rgba(0,0,0,0.5)] line-through">
-                ${item.mainprice}
+                {product.discount}
               </span>
             </div>
             <div className="mt-2 flex gap-x-2">
               <div className="flex">
-                {[...Array(5)].map((_, index) =>
-                  index < item.stars ? (
-                    <BiSolidStar key={index} color="#FFAD33" />
-                  ) : (
-                    <BiSolidStar key={index} className="text-black/25" />
-                  )
-                )}
+               
+                 <BiSolidStar color="#FFAD33" />
+                 <BiSolidStar color="#FFAD33" />
+                 <BiSolidStar color="#FFAD33" />
               </div>
               <span className="font-poppins font-semibold text-[14px] leading-[21px] text-[rgba(0,0,0,0.5)]">
-                ({item.rating})
+                (3.5)
               </span>
             </div>
             <div>
-              {item.colors && (
-                <div className="flex gap-2 mt-2">
-                  {item.colors.map((color, i) => (
-                    <div
-                      key={i}
-                      className="w-5 h-5 rounded-full border p-0.5 cursor-pointer"
-                      style={{ backgroundColor: color }}
-                    ></div>
-                  ))}
-                </div>
-              )}
+             
             </div>
           </div>
+             </div>
+            ))
+          }
+
+            
         </div>
+
+          <div className='flex gap-x-10 mt-6'>
+           <button>Prev</button>
+           {
+            pageArr.map((item)=>(
+
+              <p>{item}</p>
+            ))
+           }
+           <button>Next</button>
+          </div>
+
       </div>
     </div>
    </div>
