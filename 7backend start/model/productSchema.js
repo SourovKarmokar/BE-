@@ -14,6 +14,7 @@ const productSchema = new Schema({
         type: Number,
         required: true,
     },
+    
     stock:{
         type: Number
     },
@@ -23,9 +24,7 @@ const productSchema = new Schema({
     quantity:{
         type: Number
     },
-    // sold:{
-    //     type: Number
-    // },
+    
     image:{
         type: String
     },

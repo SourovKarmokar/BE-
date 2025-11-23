@@ -104,8 +104,8 @@ export default function CreateProduct() {
       }
 
       const res = await axios.post(
-        "http://localhost:3000/api/v1/product/createproduct",
-        dataToSend,
+  "http://localhost:3000/api/v1/product/createproduct",
+  dataToSend,
         {
           headers: {
             "Content-Type": "multipart/form-data",

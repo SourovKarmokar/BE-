@@ -10,7 +10,7 @@ const Product = () => {
   const [product, setProduct] = useState([]);
   const [totalData, setTotlalData] = useState(0);
   const [currentPage , setCurrentPage ] = useState(1);
-  const [productPerPage , setProductPerPage] = useState(2)
+  const [productPerPage , setProductPerPage] = useState(3)
 
   const fetchProduct = async () => {
     try {
@@ -139,7 +139,7 @@ const Product = () => {
                       <BiSolidStar color="#FFAD33" />
                     </div>
                     <span className="font-poppins font-semibold text-[14px] leading-[21px] text-[rgba(0,0,0,0.5)]">
-                      (3.5)
+                      ({product.rating})
                     </span>
                   </div>
                   <div></div>

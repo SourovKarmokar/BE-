@@ -2,50 +2,64 @@ const uploadImage = require("../helpers/cloudinary");
 const productSchema = require("../model/productSchema");
 
 async function createProductController(req, res) {
-   
-    
-
-    
- try{
+    try{
         const page = (req.query.page) 
         const size = (req.query.size) 
 
         console.log(page, "page");
         console.log(size, "size");
         
-        
-
         const totalProduct = await productSchema.countDocuments({})
         console.log(totalProduct, "totalProduct") ;
         
+        // ✅ rating, quantity, subCategory add করুন
+        const {
+            name, 
+            description, 
+            price, 
+            category, 
+            discount, 
+            stock, 
+            rating,      // ← এটা add করুন
+            quantity,    // ← এটাও add করুন
+            subCategory  // ← এটাও add করুন
+        } = req.body
 
-       const {name, description, price, category , discount , stock , image} = req.body
-
-    //    const imageName = req.file.filename
-
-    const imgPath = req.file.path
+        const imgPath = req.file.path
         console.log(imgPath);
         
-       const imgUrl = await uploadImage(imgPath)
-       console.log(imgUrl ,"img");
+        const imgUrl = await uploadImage(imgPath)
+        console.log(imgUrl ,"img");
        
-       
-    const product = await new productSchema({
-        name, description, price, category, discount, stock , image : imgUrl.secure_url,
-    })
-    await product.save()
-    res.status(201).json({
-        success: true,
-        message: "Product create successful",
-        data: product
-    })
- }catch (error){
-    res.status(500).json({
-        success: false,
-        message: "Something Went Wrong",
-        error: error.message
-    })
- }
+        // ✅ সব field সহ product create করুন
+        const product = await new productSchema({
+            name, 
+            description, 
+            price, 
+            category, 
+            subCategory,   // ← add করুন
+            discount, 
+            stock,
+            quantity,      // ← add করুন
+            rating,        // ← এখন কাজ করবে
+            image: imgUrl.secure_url,
+        })
+        
+        await product.save()
+        
+        res.status(201).json({
+            success: true,
+            message: "Product create successful",
+            data: product
+        })
+        
+    } catch (error){
+        res.status(500).json({
+            success: false,
+            message: "Something Went Wrong",
+            error: error.message
+        })
+    }
 }
 
 async function getAllProductController(req,res){
