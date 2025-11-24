@@ -1,5 +1,5 @@
 const express = require("express")
-const {createProductController ,getAllProductController } = require("../../controller/productController")
+const {createProductController ,getAllProductController, getSingleProductController } = require("../../controller/productController")
 const router = express.Router()
 const multer  = require('multer')
 // const upload = multer({ dest: 'uploads/' })
@@ -27,5 +27,6 @@ const upload = multer({ storage: storage })
 
 router.post("/createproduct",upload.single('image'),createProductController);
 router.get ("/getallproduct" ,getAllProductController)
+router.get ("/singleproduct/:id" ,getSingleProductController)
 
 module.exports = router;

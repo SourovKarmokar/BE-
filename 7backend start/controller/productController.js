@@ -93,4 +93,26 @@ async function getAllProductController(req,res){
     }
 }
 
-module.exports = {createProductController ,getAllProductController};
+async function getSingleProductController(req,res){
+    try{
+
+        const {id} = req.params
+        const getsingleProduct = await productSchema.findById(id)
+        res.status(200).json({
+            success: true,
+            message: "Single Product data find successful",
+            data: getsingleProduct
+
+        })
+    } catch(error){
+        res.status(500).json({
+            success: false ,
+            message: "Something Went Wrong "
+        })
+    }
+
+}
+
+module.exports = {createProductController ,getAllProductController ,
+getSingleProductController
+};

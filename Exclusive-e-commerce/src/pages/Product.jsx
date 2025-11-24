@@ -5,6 +5,7 @@ import axios from "axios";
 import { BiSolidStar } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { LuEye } from "react-icons/lu";
+import ProductRating from "../components/rating/ProductRating";
 
 const Product = () => {
   const [product, setProduct] = useState([]);
@@ -94,7 +95,7 @@ const Product = () => {
         <div className="w-[70%]">
           <div className="flex justify-between flex-wrap space-y-10">
             {product.map((product) => (
-              <div>
+              <Link to={`/productdetails/${product._id}`}>
                 <div className="overflow-hidden">
                   <div className="relative group bg-[#F5F5F5] w-[270px] h-[250px] flex items-center justify-center rounded-[4px]">
                     <img
@@ -133,18 +134,19 @@ const Product = () => {
                     </span>
                   </div>
                   <div className="mt-2 flex gap-x-2">
-                    <div className="flex">
+                    {/* <div className="flex">
                       <BiSolidStar color="#FFAD33" />
                       <BiSolidStar color="#FFAD33" />
                       <BiSolidStar color="#FFAD33" />
                     </div>
                     <span className="font-poppins font-semibold text-[14px] leading-[21px] text-[rgba(0,0,0,0.5)]">
-                      ({product.rating})
-                    </span>
+                      ({product?.rating})
+                    </span> */}
+                    <ProductRating rating={product.rating} />
                   </div>
                   <div></div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

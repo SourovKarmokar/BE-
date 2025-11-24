@@ -4,6 +4,7 @@ import Navbar from "./components/navbar/NavBar";
 import RootLayout from "./layout/Rootlayout";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
+import ProductDetails from "./pages/ProductDetails";
 
 
 const router = createBrowserRouter([
@@ -12,7 +13,8 @@ const router = createBrowserRouter([
     element: <RootLayout/>,
     children: [
       {index: true, Component: Home},
-      {path: "/product" , Component: Product}
+      {path: "/product" , Component: Product},
+      { path: "/productdetails/:id" , Component: ProductDetails }
     ]
   }
 ])
