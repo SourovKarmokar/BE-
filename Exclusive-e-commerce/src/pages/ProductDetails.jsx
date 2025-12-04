@@ -6,7 +6,7 @@ import { FiHeart } from 'react-icons/fi';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { MdOutlineKeyboardReturn } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { cartDetails } from '../slice/cartSlice';
+import {  cartTotal } from '../slice/cartSlice';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -35,7 +35,8 @@ const ProductDetails = () => {
 
   const handleAdd = () => {
     // console.log(product);
-    dispatch(cartDetails(product))
+    dispatch(cartTotal(product))
+    localStorage.setItem("cartDetails" , JSON.stringify(product))
     
   }
 
