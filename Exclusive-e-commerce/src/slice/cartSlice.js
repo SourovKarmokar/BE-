@@ -9,10 +9,18 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    cartTotal: (state, action) => {     
-      console.log('Cart State:', state.value);
-      console.log(action.payload);
-      state.value = action.payload;
+    cartTotal: (state, action) => {  
+      console.log('Payload:', action.payload);   
+      const cartIndex = state.value.findIndex((item) => 
+      item._id == action.payload._id
+      )
+      if(cartIndex >= 0) {
+        state.value[cartIndex].cartQun += 1
+        
+      }else{
+        state.value.push({...action.payload ,cartQun: 1})
+      }
+      localStorage.setItem("cartDetails" , JSON.stringify(state.value))
     },
    
   },

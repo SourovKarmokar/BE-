@@ -36,7 +36,6 @@ const ProductDetails = () => {
   const handleAdd = () => {
     // console.log(product);
     dispatch(cartTotal(product))
-    localStorage.setItem("cartDetails" , JSON.stringify(product))
     
   }
 

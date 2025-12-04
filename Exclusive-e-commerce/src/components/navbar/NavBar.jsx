@@ -2,16 +2,20 @@ import { Heart, ShoppingCart, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import Container from "../container/Container";
 import logo from "../../assets/logo.png";
+import { useSelector } from "react-redux";
 
 const navLinks = [
-  {  name: "Home" , path: "/"},
-  {  name: "Product" ,  path: "/product"},
-  {  name: "Contact" },
-  {  name: "About" },
-  {  name: "Sign Up" },
+  { id: 1, name: "Home", path: "/" },
+  { id: 2, name: "Product", path: "/product" },
+  { id: 3, name: "Contact", path: "/contact" },
+  { id: 4, name: "About", path: "/about" },
+  { id: 5, name: "Sign Up", path: "/signup" },
 ];
 
 export default function Navbar() {
+  const data = useSelector((select) => select.cartInfo.value);
+  console.log(data);
+
   return (
     <>
       <Container>
@@ -50,9 +54,19 @@ export default function Navbar() {
             <button className="hover:text-red-500 transition-colors">
               <Heart className="w-6 h-6" />
             </button>
-            <button className="hover:text-blue-500 transition-colors">
-              <ShoppingCart className="w-6 h-6" />
-            </button>
+            <Link to="/cart" className="relative">
+              <button className="hover:text-blue-500 transition-colors">
+                <ShoppingCart className="w-6 h-6" />
+              </button>
+
+              
+              {data.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[11px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex justify-center items-center shadow-md
+                animate-bounce">
+                  {data.length}
+                </span> 
+              )}
+            </Link>
           </div>
         </div>
       </Container>
