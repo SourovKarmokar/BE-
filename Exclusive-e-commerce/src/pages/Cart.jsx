@@ -1,8 +1,19 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { cartQuantity } from '../slice/cartSlice'
 
 const Cart = () => {
+   const dispatch = useDispatch()
+    
     const product  = useSelector((state)=> state.cartInfo.value)
+
+    const handleIncrement = (item) => {
+        dispatch(cartQuantity({
+          ...item , type: "increment"
+        }))
+        
+    }
+
   return (
     <div className='py-10 font-poppins'>
       <div className='flex py-3 px-2 shadow justify-between my-5'>
@@ -15,7 +26,10 @@ const Cart = () => {
         {
             product.map((item) => (
                 <div className='flex py-3 px-2 shadow justify-between'>
-        <div>{item.name}</div>
+        <div className='flex justify-between'>
+          <img className='w-[50px]' src={item.image} alt="" />
+          <p> {item.name}</p>
+          </div>
         <div>{item.price}</div>
         <div className='flex gap-x-4 items-center'>
             <p className='cursor-pointer'>
@@ -24,7 +38,9 @@ const Cart = () => {
             <p>
                 {item.cartQun}
             </p>
-            <p className='cursor-pointer'>
+            <p 
+            onClick={()=>handleIncrement(item)}
+            className='cursor-pointer'>
                 +
             </p>
         </div>
