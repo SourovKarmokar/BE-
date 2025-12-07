@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux';
+ 
 
 const initialState = {
   value: localStorage.getItem("cartDetails") ?
@@ -25,15 +25,18 @@ export const cartSlice = createSlice({
     },
     cartQuantity:(state,action) =>{
     
-      console.log(state);
-      console.log(action.payload);
+      
       const cartIndex = state.value.findIndex((item) => item._id == action.payload._id )
       
       
      
       if(action.payload.type == "increment"){
         state.value[cartIndex].cartQun ++
+      }else if(action.payload.type == 'decrement'){
+        state.value[cartIndex].cartQun --
       }
+
+      localStorage.setItem("cartDetails", JSON.stringify(state.value))
       
     }
    
