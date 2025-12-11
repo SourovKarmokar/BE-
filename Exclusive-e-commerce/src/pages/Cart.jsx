@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartQuantity } from "../slice/cartSlice";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Cart = () => {
   const dispatch = useDispatch();
-
+  const navigate =  useNavigate()
   const product = useSelector((state) => state.cartInfo.value);
 
   const [discount, setDiscount] = useState(null);
@@ -35,8 +35,17 @@ const Cart = () => {
       setDiscount(grandTotal * 0.2);
     }
   };
-
+  
   const total = grandTotal - discount;
+
+  const handleCheckout =() => {
+    navigate("/checkout",{
+      state:{
+        totalPrice:total,
+      }
+    })
+  }
+
 
   return (
     <div className="py-10 font-poppins">
@@ -107,9 +116,9 @@ const Cart = () => {
       </div>
 
       <div className="flex justify-end ">
-        <Link to='/checkout' className="w-[50%]" >
+        <div onClick={handleCheckout}  className="w-[50%]" >
         <button className="bg-primary text-white w-[50%] py-3 mt-5 rounded-full">Checkout</button>
-        </Link>
+        </div>
       </div>
     </div>
   );
