@@ -6,6 +6,7 @@ const adminRouter = require("./admin")
 const categoryRouter = require("./category")
 const subCategoryRouter = require("./subcategory")
 const productRouter = require("./product")
+const orderRouter = require("./order")
 
 
 router.use("/authentication",authRooter)
@@ -14,5 +15,6 @@ router.use("/admin",adminRouter)
 router.use("/category",categoryRouter)
 router.use("/subcategory",subCategoryRouter)
 router.use("/product",productRouter)
+router.use("/order", orderRouter)
 
 module.exports = router

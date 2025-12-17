@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
+import axios from "axios";
 
 const Checkout = () => {
-    const data = useLocation()
-    console.log(data.state.totalPrice);
-    const totals = data.state.totalPrice ;
+  const data = useLocation();
+  console.log(data.state.totalPrice);
+  const totals = data.state.totalPrice;
 
   const product = useSelector((state) => state.cartInfo.value);
   console.log(product);
@@ -24,8 +25,29 @@ const Checkout = () => {
     setCheckoutDetails({ ...checkoutDetails, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(checkoutDetails);
+    try {
+      const response = await axios.post("http://localhost:3000/api/v1/order/payment", {
+        firstName: checkoutDetails.firstName,
+        lastName: checkoutDetails.lastName,
+        email: checkoutDetails.email,
+        address: checkoutDetails.address,
+        city: checkoutDetails.city,
+        phone: checkoutDetails.phone,
+        postcode: checkoutDetails.postcode,
+        totalPrice: totals, 
+        products: product,   
+      });
+      console.log(response.data, "response");
+      
+      // Optional: Show success message or redirect
+      alert("Order placed successfully!");
+      
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Failed to place order. Please try again.");
+    }
   };
 
   return (
