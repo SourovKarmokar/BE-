@@ -12,6 +12,11 @@ app.use(cors());
 dbConnection();
 app.use(route);
 
+app.post("/success", (req, res) => {
+  console.log("✅ Payment Success:", req.body);
+  res.redirect("http://localhost:5173/paymentsuccess");
+});
+
 const path = require('path')
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
