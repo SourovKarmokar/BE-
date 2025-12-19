@@ -29,6 +29,9 @@ async function otpController(req,res){
             new: true
         }
     )
+    return res.status(200).json({
+        message: "Otp Verification "
+    })
 }
 
 

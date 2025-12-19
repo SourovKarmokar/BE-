@@ -11,12 +11,19 @@ import UpdateCategory from './components/Category/UpdateCategory.jsx';
 import CreateSubCategory from './components/SubCategory/CreateSubCategory';
 import AllSubCategories from './components/SubCategory/AllSubCategories';
 import UpdateSubCategory from './components/SubCategory/UpdateSubCategory.jsx';
+import Registration from './components/Authentication/Registration.jsx';
+import VerifyOtp from './components/Authentication/VerifyOtp.jsx';
+import Login from './components/Authentication/Login.jsx';
+import ProtectedRoute from './components/Authentication/ProtectedRoute.jsx';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Dashboard,
+    // Component: Dashboard,
+    element: <ProtectedRoute>
+      <Dashboard/>
+    </ProtectedRoute>,
     children: [
       // { index: true, Component : Dashboard },
       { path: "/create-product", Component: CreateProduct },
@@ -29,6 +36,18 @@ const router = createBrowserRouter([
       { path: "/update-subcategory/:id", Component: UpdateSubCategory  }
       
     ],
+  },
+  {
+    path: "/registration", 
+    Component: Registration
+  },
+  {
+    path: "/verify-otp", 
+    Component: VerifyOtp
+  },
+  {
+    path: "/login", 
+    Component: Login
   },
 ]);
 
