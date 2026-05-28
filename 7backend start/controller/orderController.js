@@ -5,14 +5,12 @@ const crypto = require("crypto");
 const SSLCommerzPayment = require("sslcommerz-lts");
 const store_id = "mern2693af6ae125a3";
 const store_passwd = "mern2693af6ae125a3@ssl";
-const is_live = false; // Sandbox mode
+const is_live = false;
 
 const createOrderController = async (req, res) => {
   try {
-    // Truly random ObjectId
     const randomBytes = crypto.randomBytes(12);
     const tran_id = new ObjectId(randomBytes).toString();
-    console.log("Transaction ID:", tran_id);
 
     const {
       firstName,
@@ -27,13 +25,13 @@ const createOrderController = async (req, res) => {
     } = req.body;
 
     const data = {
-      total_amount: totalPrice, // ✅ totalPrice use koren, '100' na
-      currency: "BDT", // ✅ 'BDT' hobe, 'totalPrice' na
+      total_amount: totalPrice,
+      currency: "BDT",
       tran_id: tran_id,
-      success_url: "http://localhost:3000/success", // ✅ Correct
-      fail_url: "http://localhost:3000/fail", // ✅ Correct
-      cancel_url: "http://localhost:3000/cancel", // ✅ Correct
-      ipn_url: "http://localhost:3000/ipn", // ✅ Correct
+      success_url: "http://localhost:3000/success",
+      fail_url: "http://localhost:3000/fail",
+      cancel_url: "http://localhost:3000/cancel",
+      ipn_url: "http://localhost:3000/ipn",
       shipping_method: "Courier",
       product_name: "Computer.",
       product_category: "Electronic",
@@ -58,12 +56,9 @@ const createOrderController = async (req, res) => {
     };
 
     const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
-
     const apiResponse = await sslcz.init(data);
 
-    // Check if GatewayPageURL exists
     if (!apiResponse.GatewayPageURL) {
-      console.error("SSLCommerz Error:", apiResponse);
       return res.status(400).json({
         success: false,
         message: "Payment gateway initialization failed",
@@ -71,13 +66,8 @@ const createOrderController = async (req, res) => {
       });
     }
 
-    const GatewayPageURL =
-      apiResponse.GatewayPageURL ||
-      apiResponse.gatewayPageURL ||
-      apiResponse.redirectGatewayURL;
-    console.log("Gateway URL:", GatewayPageURL);
+    const GatewayPageURL = apiResponse.GatewayPageURL;
 
-    // Order save করার আগে
     const orderData = new orderSchema({
       firstName,
       lastName,
@@ -101,7 +91,6 @@ const createOrderController = async (req, res) => {
       gatewayPageURL: GatewayPageURL,
     });
   } catch (error) {
-    console.error("Order creation error:", error);
     return res.status(500).json({
       success: false,
       message: "Failed to create order",
@@ -110,6 +99,49 @@ const createOrderController = async (req, res) => {
   }
 };
 
+const getAllOrdersController = async (req, res) => {
+  try {
+    const orders = await orderSchema.find().sort({ createdAt: -1 });
+    return res.status(200).json({
+      success: true,
+      message: "All orders fetched successfully",
+      data: orders,
+      total: orders.length,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch orders",
+      error: error.message,
+    });
+  }
+};
+
+const updateOrderStatusController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { paymentStatus } = req.body;
+    const order = await orderSchema.findByIdAndUpdate(
+      id,
+      { $set: { paymentStatus } },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Order status updated",
+      data: order,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update order status",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createOrderController,
+  getAllOrdersController,
+  updateOrderStatusController,
 };

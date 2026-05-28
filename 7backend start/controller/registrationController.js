@@ -69,7 +69,11 @@ async function registrationController(req, res) {
     });
 
   
-    emailverification(email,otp)
+    try {
+      await emailverification(email, otp);
+    } catch (emailErr) {
+      console.error("❌ Email Verification sending failed:", emailErr.message);
+    }
 
     await user.save();
 

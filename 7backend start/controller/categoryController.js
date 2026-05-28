@@ -3,7 +3,6 @@ const categorySchema = require("../model/categorySchema");
 function createCategoryController(req,res){
     
     const {name,description} = req.body
-    console.log(name, description);
     
     const category = new categorySchema ({
         name,
@@ -11,14 +10,20 @@ function createCategoryController(req,res){
     })
     
     category.save()
-
-    return res.status(201).json({
-        success: true,
-        message: "Category Create Successfully ",
-        date: category
-
-    })
-    
+        .then(() => {
+            return res.status(201).json({
+                success: true,
+                message: "Category Create Successfully",
+                data: category
+            })
+        })
+        .catch((err) => {
+            return res.status(500).json({
+                success: false,
+                message: "Something Went Wrong",
+                error: err.message
+            })
+        })
 }
 
 

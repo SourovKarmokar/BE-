@@ -43,18 +43,26 @@ async function loginController(req, res) {
     email: existingUser.email,
     role: existingUser.role
   },
-  "api2406mern",
+  process.env.JWT_SECRET || "api2406mern",
   {
-    expiresIn: "10m"
+    expiresIn: "7d"
   }
 );
 
      if (!isMatched) {
-    res.json({ error: "Password is not match" });
+    return res.status(401).json({ success: false, error: "Password is not match" });
   } else {
-    res.json({
-      Success: "Login Successfully done",
-      accessToken: accessToken
+    return res.status(200).json({
+      success: true,
+      message: "Login Successfully done",
+      accessToken: accessToken,
+      user: {
+        id: existingUser._id,
+        firstName: existingUser.firstName,
+        lastName: existingUser.lastName,
+        email: existingUser.email,
+        role: existingUser.role
+      }
     });
   }
 

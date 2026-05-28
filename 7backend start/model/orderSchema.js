@@ -11,6 +11,11 @@ const orderSchema = new Schema({
     postcode: String,
     totalPrice: String,
     products: Array,
-})
+    transactionId: String,
+    paymentStatus: {
+        type: String,
+        default: "Pending"
+    },
+}, { timestamps: true })
 
 module.exports = mongoose.model("OrderList" , orderSchema)
